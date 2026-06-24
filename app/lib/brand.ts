@@ -44,7 +44,12 @@ export type Brand = {
   tabs: Record<TabId, TabContent>;
   siteNav: NavCol[];
   logos: Logo[];
-  testimonial: { quote: string; readMore: string; avatar: string; href?: string };
+  testimonial: {
+    quote: string;
+    readMore: string;
+    avatar: string;
+    href?: string;
+  };
   infoCards: { label: string; title: string; sub: string; href?: string }[];
   chipFoot: string;
 };
@@ -65,9 +70,12 @@ export const margolis: Brand = {
   tabs: {
     new: {
       label: "Getting Started",
-      headline: [{ t: "Legal clarity in a " }, { t: "complex world.", hl: true }],
+      headline: [
+        { t: "Legal clarity in a " },
+        { t: "complex world.", hl: true },
+      ],
       subhead:
-        "Fractional general counsel and commercial legal support for growing businesses.",
+        "Tailored legal solutions for entrepreneurs, companies, and legal departments.",
       cta: "Let's get started",
       ctaHref: GET_STARTED,
       chips: [
@@ -176,7 +184,10 @@ export const margolis: Brand = {
   },
 
   siteNav: [
-    { heading: "Firm", links: ["How We Help", "Our Team", "Services", "Our Locations"] },
+    {
+      heading: "Firm",
+      links: ["How We Help", "Our Team", "Services", "Our Locations"],
+    },
     {
       heading: "Services",
       links: [
@@ -188,11 +199,21 @@ export const margolis: Brand = {
     },
     {
       heading: "Resources",
-      links: ["Blog", "Deal Desk Guide", "First-Time GC Guide", "Sales & Legal"],
+      links: [
+        "Blog",
+        "Deal Desk Guide",
+        "First-Time GC Guide",
+        "Sales & Legal",
+      ],
     },
     {
       heading: "Company",
-      links: ["Let's Get Started", "Contact Us", "Privacy Policy", "Disclaimer"],
+      links: [
+        "Let's Get Started",
+        "Contact Us",
+        "Privacy Policy",
+        "Disclaimer",
+      ],
     },
   ],
 
@@ -202,7 +223,7 @@ export const margolis: Brand = {
   testimonial: {
     quote: "See how Margolis can support your business and your team.",
     readMore: "Get in touch",
-    avatar: "/images/margolis-banner.svg",
+    avatar: "/images/matt.png",
     href: CONTACT,
   },
 

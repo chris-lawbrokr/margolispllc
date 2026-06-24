@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowRight, ArrowUpRight, Menu, Newspaper, X } from "lucide-react";
-import { rhymesDisplay } from "../lib/fonts";
 import { TAB_ORDER, type TabId } from "../lib/brand";
 import { ACCENT, CARD_BG, GLASS, GLASS_BTN, type OverlayHost } from "../lib/overlay-ui";
 import { ChipPopup, NavModal } from "./overlay-popups";
@@ -18,12 +17,10 @@ function Hero({ host, compact }: { host: OverlayHost; compact: boolean }) {
       className="animate-hero-fade relative z-10 flex w-full max-w-3xl flex-col items-center gap-4 px-8 text-white"
     >
       <h2
-        className={`m-0 text-center text-balance text-[clamp(1.75rem,4.8vw,4.25rem)] font-medium leading-[1.08] tracking-[-0.01em] ${rhymesDisplay.className} min-[1150px]:whitespace-nowrap min-[1150px]:text-[clamp(1.75rem,3.1vw,3rem)]`}
+        className="m-0 text-center text-balance font-sans text-[clamp(1.75rem,4.8vw,4.25rem)] font-bold leading-[1.08] tracking-[-0.02em] text-white min-[1150px]:whitespace-nowrap min-[1150px]:text-[clamp(1.75rem,3.1vw,3rem)]"
       >
         {t.headline.map((p, i) => (
-          <span key={i} className={p.hl ? "text-[#9ed9b4]" : undefined}>
-            {p.t}
-          </span>
+          <span key={i}>{p.t}</span>
         ))}
       </h2>
 
@@ -125,15 +122,6 @@ function MobileMenu({ host }: { host: OverlayHost }) {
               </button>
             ))}
             <div className="mx-1 my-1 h-px bg-white/15" />
-            <a
-              href={host.brand.ctaSecondary.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={host.closeCta}
-              className="w-full rounded-xl px-3 py-2 text-left text-sm font-normal text-white transition-colors hover:bg-white/15"
-            >
-              {host.brand.ctaSecondary.label}
-            </a>
             <a
               href={host.brand.ctaPrimary.href}
               target="_blank"
@@ -260,6 +248,14 @@ export default function IntroCard({
     >
       {/* Deep-green hero background. */}
       <div className="absolute inset-0" aria-hidden style={{ background: CARD_BG }} />
+      {/* Floating Margolis hexagons, right-aligned to echo the homepage banner. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/margolis-banner.svg"
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute right-0 top-1/2 h-[55%] w-auto -translate-y-1/2 object-contain opacity-60 min-[1150px]:right-6 min-[1150px]:h-[82%]"
+      />
 
       {/* Wordmark, top-left. */}
       <img
@@ -299,14 +295,6 @@ export default function IntroCard({
       {/* Top-right header CTAs (desktop) or the mobile menu. */}
       {showTabs ? (
         <div className="absolute right-8 top-8 flex items-center gap-3">
-          <a
-            href={host.brand.ctaSecondary.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`flex items-center gap-2 rounded-full px-5 py-3 text-base font-normal text-white ${GLASS_BTN}`}
-          >
-            {host.brand.ctaSecondary.label}
-          </a>
           <a
             href={host.brand.ctaPrimary.href}
             target="_blank"
