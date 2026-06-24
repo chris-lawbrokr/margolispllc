@@ -59,6 +59,8 @@ export const TAB_ORDER: TabId[] = ["new", "comparing", "customer"];
 const SITE = "https://www.margolispllc.com";
 const GET_STARTED = `${SITE}/lets-get-started`;
 const CONTACT = `${SITE}/contact-us`;
+// Lawbrokr intake link used by the popup CTAs ("Let's Get Started" / "Get in touch").
+export const INTAKE = "https://margolispllc.lawbrokr.com/";
 
 export const margolis: Brand = {
   name: "Margolis PLLC",
@@ -104,7 +106,7 @@ export const margolis: Brand = {
           title: "Faster deals, less legal friction",
           body: "From the deal desk to redlines and indemnity, Margolis builds the playbooks and reviews that let sales close confidently — turning legal from a bottleneck into a competitive edge.",
           primary: "Get in touch",
-          href: CONTACT,
+          href: INTAKE,
         },
       ],
     },
@@ -168,7 +170,7 @@ export const margolis: Brand = {
           title: "Predictable, right-sized engagements",
           body: "Flexible fractional arrangements scale with your needs and keep legal spend predictable — you get the right amount of counsel without the surprise of hourly billing.",
           primary: "Let's get started",
-          href: GET_STARTED,
+          href: INTAKE,
         },
         {
           id: "locations",
@@ -224,7 +226,7 @@ export const margolis: Brand = {
     quote: "See how Margolis can support your business and your team.",
     readMore: "Get in touch",
     avatar: "/images/matt.png",
-    href: CONTACT,
+    href: INTAKE,
   },
 
   infoCards: [

@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 import { rhymesDisplay } from "../lib/fonts";
 import type { OverlayHost } from "../lib/overlay-ui";
 import { ACCENT } from "../lib/overlay-ui";
-import { TAB_ORDER } from "../lib/brand";
+import { INTAKE, TAB_ORDER } from "../lib/brand";
 
 // Shared backdrop + panel chrome for the two card popups (chip answer + site
 // map). Positioned absolutely inside the card, flex-centered, capped to the
@@ -79,7 +79,7 @@ export function ChipPopup({ host }: { host: OverlayHost }) {
           {chip.primary}
         </a>
         <a
-          href={host.brand.ctaPrimary.href ?? undefined}
+          href={INTAKE}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center rounded-full bg-[rgb(var(--ov-ink)/0.08)] px-[1.125rem] py-2 text-sm font-semibold text-[var(--ov-text)] transition-colors hover:bg-[rgb(var(--ov-ink)/0.16)]"
