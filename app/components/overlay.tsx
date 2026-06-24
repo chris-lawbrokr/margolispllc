@@ -3,7 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Search } from "lucide-react";
 import { margolis, type TabId } from "../lib/brand";
-import { ACCENT, type OverlayHost } from "../lib/overlay-ui";
+import {
+  ACCENT,
+  darkTheme,
+  type OverlayHost,
+  type OverlayTheme,
+} from "../lib/overlay-ui";
 import IntroCard from "./intro-card";
 
 // One gesture = one step. The strong part of a flick holds the lock; the
@@ -18,9 +23,10 @@ const brand = margolis;
 
 // The intro overlay: a full-page hero card over the embedded site. ONE
 // scroll/swipe gesture fades it out to reveal the page behind it; a floating
-// pill then lets the visitor bring it back. A faithful React port of the boxii
-// overlay's behaviour and design.
-export default function Overlay() {
+// pill then lets the visitor bring it back. The look is driven entirely by the
+// `theme` prop (a set of `--ov-*` CSS variables), so the same overlay renders
+// the dark green card or the bright liquid-glass card.
+export default function Overlay({ theme = darkTheme }: { theme?: OverlayTheme }) {
   // ---- Tab + popups ----
   const [tab, setTabState] = useState<TabId>("new");
   const [openChip, setOpenChip] = useState<string | null>(null);
@@ -77,7 +83,7 @@ export default function Overlay() {
       (document as Document & { fonts?: { ready: Promise<unknown> } }).fonts
         ?.ready ?? Promise.resolve();
 
-    const ready = Promise.all([preload(brand.logoSrc), fontsReady]);
+    const ready = Promise.all([preload(theme.logoSrc), fontsReady]);
     const failsafe = new Promise<void>((res) => setTimeout(res, MAX_MS));
 
     Promise.race([ready, failsafe]).then(async () => {
@@ -88,7 +94,7 @@ export default function Overlay() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [theme.logoSrc]);
 
   // ---- Measure viewport (width => desktop, height => compact) ----
   useEffect(() => {
@@ -220,6 +226,7 @@ export default function Overlay() {
 
   const host: OverlayHost = {
     brand,
+    theme,
     tab,
     setTab,
     openChip,
@@ -239,7 +246,7 @@ export default function Overlay() {
   };
 
   return (
-    <>
+    <div style={theme.vars as React.CSSProperties}>
       <div
         onTransitionEnd={(e) => {
           if (dismissed && e.target === e.currentTarget) setGone(true);
@@ -255,11 +262,6 @@ export default function Overlay() {
               <div className="shrink-0">
                 <IntroCard host={host} layout={{ desktop, compact }} />
               </div>
-              {brand.logos.length > 0 && (
-                <div className="shrink-0 pt-8">
-                  <Marquee />
-                </div>
-              )}
               <div className="min-h-0 flex-1" />
             </div>
           </div>
@@ -271,12 +273,9 @@ export default function Overlay() {
           className={`absolute inset-0 z-[10000] flex items-center justify-center transition-opacity duration-[450ms] ${
             loading ? "opacity-100" : "pointer-events-none opacity-0"
           }`}
-          style={{
-            background:
-              "radial-gradient(120% 90% at 50% -10%, #0c3a33, transparent 60%), #051f20",
-          }}
+          style={{ background: "var(--ov-boot)" }}
         >
-          <div className="size-11 animate-spin rounded-full border-[3px] border-white/15 border-t-[#dbf0dd]" />
+          <div className="size-11 animate-spin rounded-full border-[3px] border-[rgb(var(--ov-ink)/0.15)] border-t-[var(--ov-accent)]" />
         </div>
       </div>
 
@@ -285,21 +284,21 @@ export default function Overlay() {
         <>
           {/* Mobile: full-width bar. */}
           <div
-            className="fixed inset-x-6 bottom-6 z-[10000] flex gap-2 rounded-3xl border border-white/10 p-2 shadow-lg shadow-black/20 backdrop-blur-md min-[640px]:hidden"
-            style={{ background: "rgba(31,43,59,0.55)" }}
+            className="fixed inset-x-6 bottom-6 z-[10000] flex gap-2 rounded-3xl border border-[var(--ov-float-border)] p-2 shadow-lg shadow-black/20 backdrop-blur-md min-[640px]:hidden"
+            style={{ background: "var(--ov-float-bg)" }}
           >
             <FloatingActions onReopen={reopen} fluid />
           </div>
           {/* Tablet+: compact pill bottom-left. */}
           <div
-            className="fixed bottom-8 left-8 z-[10000] hidden gap-2 rounded-3xl border border-white/10 p-2 shadow-lg shadow-black/20 backdrop-blur-md min-[640px]:flex"
-            style={{ background: "rgba(31,43,59,0.55)" }}
+            className="fixed bottom-8 left-8 z-[10000] hidden gap-2 rounded-3xl border border-[var(--ov-float-border)] p-2 shadow-lg shadow-black/20 backdrop-blur-md min-[640px]:flex"
+            style={{ background: "var(--ov-float-bg)" }}
           >
             <FloatingActions onReopen={reopen} />
           </div>
         </>
       )}
-    </>
+    </div>
   );
 }
 
@@ -319,7 +318,7 @@ function FloatingActions({ onReopen, fluid }: { onReopen: () => void; fluid?: bo
       <button
         type="button"
         onClick={onReopen}
-        className={`flex h-20 flex-col items-center justify-center gap-1 rounded-2xl text-white transition-colors hover:bg-white/15 ${
+        className={`flex h-20 flex-col items-center justify-center gap-1 rounded-2xl text-[var(--ov-text)] transition-colors hover:bg-[rgb(var(--ov-ink)/0.15)] ${
           fluid ? "flex-1" : "w-20"
         }`}
       >
@@ -327,23 +326,5 @@ function FloatingActions({ onReopen, fluid }: { onReopen: () => void; fluid?: bo
         <span className="text-xs font-medium">Learn More</span>
       </button>
     </>
-  );
-}
-
-// Auto-scrolling partner-logo strip (only rendered when a brand supplies logos;
-// Margolis has none, so this stays dormant).
-function Marquee() {
-  const logos = [...brand.logos, ...brand.logos];
-  return (
-    <div className="relative w-full overflow-hidden rounded-3xl border border-white/10 bg-[#06302b] py-5">
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#06302b] to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#06302b] to-transparent" />
-      <div className="flex w-max animate-marquee items-center gap-16 pr-16">
-        {logos.map((logo, i) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img key={i} src={logo.src} alt={logo.alt} aria-hidden className="h-6 w-auto shrink-0 opacity-90 min-[1150px]:h-7" />
-        ))}
-      </div>
-    </div>
   );
 }

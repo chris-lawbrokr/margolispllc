@@ -14,11 +14,9 @@ function Hero({ host, compact }: { host: OverlayHost; compact: boolean }) {
   return (
     <div
       key={host.tab}
-      className="animate-hero-fade relative z-10 flex w-full max-w-3xl flex-col items-center gap-4 px-8 text-white"
+      className="animate-hero-fade relative z-10 flex w-full max-w-3xl flex-col items-center gap-4 px-8 text-[var(--ov-text)]"
     >
-      <h2
-        className="m-0 text-center text-balance font-sans text-[clamp(1.75rem,4.8vw,4.25rem)] font-bold leading-[1.08] tracking-[-0.02em] text-white min-[1150px]:whitespace-nowrap min-[1150px]:text-[clamp(1.75rem,3.1vw,3rem)]"
-      >
+      <h2 className="m-0 text-center text-balance font-sans text-[clamp(1.75rem,4.8vw,4.25rem)] font-bold leading-[1.08] tracking-[-0.02em] text-[var(--ov-text)] min-[1150px]:whitespace-nowrap min-[1150px]:text-[clamp(1.75rem,3.1vw,3rem)]">
         {t.headline.map((p, i) => (
           <span key={i}>{p.t}</span>
         ))}
@@ -27,7 +25,7 @@ function Hero({ host, compact }: { host: OverlayHost; compact: boolean }) {
       {!compact && (
         <>
           {t.subhead ? (
-            <p className="m-0 max-w-[34rem] text-center text-base font-normal leading-normal text-white/80">
+            <p className="m-0 max-w-[34rem] text-center text-base font-normal leading-normal text-[rgb(var(--ov-ink)/0.8)]">
               {t.subhead}
             </p>
           ) : (
@@ -40,7 +38,7 @@ function Hero({ host, compact }: { host: OverlayHost; compact: boolean }) {
                 key={c.id}
                 type="button"
                 onClick={() => host.openChipPopup(c.id)}
-                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.8125rem] font-normal text-white/90 ${GLASS_BTN}`}
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.8125rem] font-normal text-[rgb(var(--ov-ink)/0.9)] ${GLASS_BTN}`}
               >
                 <span aria-hidden>{c.icon}</span> {c.q}
               </button>
@@ -51,7 +49,7 @@ function Hero({ host, compact }: { host: OverlayHost; compact: boolean }) {
             <button
               type="button"
               onClick={host.openNav}
-              className="group inline-flex items-center gap-1.5 text-[0.9375rem] font-normal text-white/60 transition-colors hover:text-white"
+              className="group inline-flex items-center gap-1.5 text-[0.9375rem] font-normal text-[rgb(var(--ov-ink)/0.6)] transition-colors hover:text-[var(--ov-text)]"
             >
               {t.cta}
               <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -61,7 +59,7 @@ function Hero({ host, compact }: { host: OverlayHost; compact: boolean }) {
               href={t.ctaHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-1.5 text-[0.9375rem] font-normal text-white/60 transition-colors hover:text-white"
+              className="group inline-flex items-center gap-1.5 text-[0.9375rem] font-normal text-[rgb(var(--ov-ink)/0.6)] transition-colors hover:text-[var(--ov-text)]"
             >
               {t.cta}
               <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -74,7 +72,7 @@ function Hero({ host, compact }: { host: OverlayHost; compact: boolean }) {
 }
 
 // The hamburger dropdown shown in the card's top-right on phones / short
-// screens (swaps the tab row + header CTAs).
+// screens (swaps the tab row + header CTA).
 function MobileMenu({ host }: { host: OverlayHost }) {
   return (
     <div className="relative">
@@ -83,7 +81,7 @@ function MobileMenu({ host }: { host: OverlayHost }) {
         aria-label="Menu"
         aria-expanded={host.ctaOpen}
         onClick={host.toggleCta}
-        className={`flex size-12 items-center justify-center rounded-full text-white ${GLASS_BTN}`}
+        className={`flex size-12 items-center justify-center rounded-full text-[var(--ov-text)] ${GLASS_BTN}`}
       >
         {host.ctaOpen && !host.ctaClosing ? (
           <X className="size-5" />
@@ -101,10 +99,10 @@ function MobileMenu({ host }: { host: OverlayHost }) {
             className="fixed inset-0 z-[39] cursor-default"
           />
           <div
-            className={`absolute inset-x-0 top-full z-40 mt-2 flex flex-col gap-1 rounded-2xl border border-white/[0.18] p-2 shadow-[0_16px_32px_-8px_rgba(0,0,0,0.45)] backdrop-blur-2xl ${
+            className={`absolute inset-x-0 top-full z-40 mt-2 flex flex-col gap-1 rounded-2xl border border-[rgb(var(--ov-ink)/0.18)] p-2 shadow-[0_16px_32px_-8px_rgba(0,0,0,0.45)] backdrop-blur-2xl ${
               host.ctaClosing ? "animate-cta-out" : "animate-cta-in"
             }`}
-            style={{ background: "rgba(5,31,32,0.97)" }}
+            style={{ background: "var(--ov-menu-bg)" }}
           >
             {TAB_ORDER.map((id) => (
               <button
@@ -114,14 +112,14 @@ function MobileMenu({ host }: { host: OverlayHost }) {
                   host.setTab(id);
                   host.closeCta();
                 }}
-                className={`w-full rounded-xl px-3 py-2 text-left text-sm text-white transition-colors hover:bg-white/15 ${
-                  host.tab === id ? "bg-white/[0.12] font-semibold" : "font-normal"
+                className={`w-full rounded-xl px-3 py-2 text-left text-sm text-[var(--ov-text)] transition-colors hover:bg-[rgb(var(--ov-ink)/0.12)] ${
+                  host.tab === id ? "bg-[rgb(var(--ov-ink)/0.12)] font-semibold" : "font-normal"
                 }`}
               >
                 {host.brand.tabs[id].label}
               </button>
             ))}
-            <div className="mx-1 my-1 h-px bg-white/15" />
+            <div className="mx-1 my-1 h-px bg-[rgb(var(--ov-ink)/0.15)]" />
             <a
               href={host.brand.ctaPrimary.href}
               target="_blank"
@@ -151,14 +149,14 @@ function DesktopBar({ host }: { host: OverlayHost }) {
           className="size-12 shrink-0 rounded-xl bg-white/10 object-cover"
         />
         <div className="flex flex-col gap-1">
-          <blockquote className="m-0 max-w-[300px] text-sm font-normal text-white">
+          <blockquote className="m-0 max-w-[300px] text-sm font-normal text-[var(--ov-text)]">
             {host.brand.testimonial.quote}
           </blockquote>
           <a
             href={host.brand.testimonial.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-left text-[0.6875rem] font-semibold uppercase tracking-[0.06em] text-white/70 transition-colors hover:text-white"
+            className="inline-flex items-center gap-1.5 text-left text-[0.6875rem] font-semibold uppercase tracking-[0.06em] text-[rgb(var(--ov-ink)/0.7)] transition-colors hover:text-[var(--ov-text)]"
           >
             {host.brand.testimonial.readMore}
             <ArrowRight className="size-3.5" />
@@ -174,13 +172,13 @@ function DesktopBar({ host }: { host: OverlayHost }) {
           rel="noopener noreferrer"
           className={`flex h-24 flex-1 flex-col justify-center gap-0.5 overflow-hidden rounded-3xl px-5 text-left ${GLASS_BTN}`}
         >
-          <span className="truncate text-[0.625rem] font-semibold uppercase tracking-[0.08em] text-white/60">
+          <span className="truncate text-[0.625rem] font-semibold uppercase tracking-[0.08em] text-[rgb(var(--ov-ink)/0.6)]">
             {c.label}
           </span>
-          <span className="truncate text-[0.9375rem] font-semibold leading-tight text-white">
+          <span className="truncate text-[0.9375rem] font-semibold leading-tight text-[var(--ov-text)]">
             {c.title}
           </span>
-          <span className="line-clamp-2 text-[0.6875rem] font-normal leading-snug text-white/70">
+          <span className="line-clamp-2 text-[0.6875rem] font-normal leading-snug text-[rgb(var(--ov-ink)/0.7)]">
             {c.sub}
           </span>
         </a>
@@ -189,7 +187,7 @@ function DesktopBar({ host }: { host: OverlayHost }) {
       <button
         type="button"
         onClick={host.dismiss}
-        className={`flex h-24 w-24 flex-col items-center justify-center gap-1.5 rounded-3xl text-base font-medium text-white ${GLASS_BTN}`}
+        className={`flex h-24 w-24 flex-col items-center justify-center gap-1.5 rounded-3xl text-base font-medium text-[var(--ov-text)] ${GLASS_BTN}`}
       >
         <ArrowUpRight className="size-5" />
         Main site
@@ -206,7 +204,7 @@ function MobileBar({ host }: { host: OverlayHost }) {
         href="https://www.margolispllc.com/blog"
         target="_blank"
         rel="noopener noreferrer"
-        className={`flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-3 text-sm font-medium text-white ${GLASS_BTN}`}
+        className={`flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-3 text-sm font-medium text-[var(--ov-text)] ${GLASS_BTN}`}
       >
         <Newspaper className="size-5" />
         Blogs
@@ -223,12 +221,51 @@ function MobileBar({ host }: { host: OverlayHost }) {
       <button
         type="button"
         onClick={host.dismiss}
-        className={`flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-3 text-sm font-medium text-white ${GLASS_BTN}`}
+        className={`flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-3 text-sm font-medium text-[var(--ov-text)] ${GLASS_BTN}`}
       >
         <ArrowUpRight className="size-5" />
         Main site
       </button>
     </div>
+  );
+}
+
+// The themed hero-card background: deep-green gradient + floating hexagons on
+// the dark theme, or the meeting photo under a bright frosted overlay on light.
+function CardBackground({ host }: { host: OverlayHost }) {
+  if (host.theme.variant === "light") {
+    return (
+      <>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/meeting.jpg"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {/* Bright, blurry overlay so the glass + text stay readable. */}
+        <div
+          aria-hidden
+          className="absolute inset-0 backdrop-blur-lg"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.46) 100%)",
+          }}
+        />
+      </>
+    );
+  }
+  return (
+    <>
+      <div className="absolute inset-0" aria-hidden style={{ background: CARD_BG }} />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/margolis-banner.svg"
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute right-0 top-1/2 h-[55%] w-auto -translate-y-1/2 object-contain opacity-60 min-[1150px]:right-6 min-[1150px]:h-[82%]"
+      />
+    </>
   );
 }
 
@@ -243,25 +280,15 @@ export default function IntroCard({
   const showMobileMenu = !showTabs;
 
   return (
-    <div
-      className="relative mx-auto flex aspect-[1080/1920] w-full max-w-[min(100%,calc((100vh_-_10rem_-_8px)*9/16))] items-center justify-center overflow-hidden rounded-[2rem] text-[#111] shadow-[0_20px_50px_-24px_rgba(17,17,26,0.45)] min-[1150px]:aspect-[1920/1080] min-[1150px]:max-w-[min(100%,calc((100vh_-_10rem_-_8px)*16/9))]"
-    >
-      {/* Deep-green hero background. */}
-      <div className="absolute inset-0" aria-hidden style={{ background: CARD_BG }} />
-      {/* Floating Margolis hexagons, right-aligned to echo the homepage banner. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/images/margolis-banner.svg"
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute right-0 top-1/2 h-[55%] w-auto -translate-y-1/2 object-contain opacity-60 min-[1150px]:right-6 min-[1150px]:h-[82%]"
-      />
+    <div className="relative mx-auto flex aspect-[1080/1920] w-full max-w-[min(100%,calc((100vh_-_10rem_-_8px)*9/16))] items-center justify-center overflow-hidden rounded-[2rem] shadow-[0_20px_50px_-24px_rgba(17,17,26,0.45)] min-[1150px]:aspect-[1920/1080] min-[1150px]:max-w-[min(100%,calc((100vh_-_10rem_-_8px)*16/9))]">
+      <CardBackground host={host} />
 
       {/* Wordmark, top-left. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={host.brand.logoSrc}
+        src={host.theme.logoSrc}
         alt={host.brand.name}
-        className="absolute left-6 top-6 w-32 min-[1150px]:left-8 min-[1150px]:top-8 min-[1150px]:w-40"
+        className="absolute left-6 top-6 z-10 w-32 min-[1150px]:left-8 min-[1150px]:top-8 min-[1150px]:w-40"
       />
 
       {/* Top-center tabs (desktop, tall enough). */}
@@ -281,8 +308,8 @@ export default function IntroCard({
                 onClick={() => host.setTab(id)}
                 className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                   active
-                    ? "bg-white text-[#06302b]"
-                    : "bg-transparent text-white/70 hover:text-white"
+                    ? "bg-[var(--ov-tab-active-bg)] text-[var(--ov-tab-active-ink)]"
+                    : "bg-transparent text-[rgb(var(--ov-ink)/0.7)] hover:text-[var(--ov-text)]"
                 }`}
               >
                 {host.brand.tabs[id].label}
@@ -292,9 +319,9 @@ export default function IntroCard({
         </div>
       )}
 
-      {/* Top-right header CTAs (desktop) or the mobile menu. */}
+      {/* Top-right header CTA (desktop) or the mobile menu. */}
       {showTabs ? (
-        <div className="absolute right-8 top-8 flex items-center gap-3">
+        <div className="absolute right-8 top-8 z-10 flex items-center gap-3">
           <a
             href={host.brand.ctaPrimary.href}
             target="_blank"
@@ -307,7 +334,7 @@ export default function IntroCard({
       ) : null}
 
       {showMobileMenu && (
-        <div className="absolute right-6 top-6 flex justify-end min-[1150px]:right-8 min-[1150px]:top-8">
+        <div className="absolute right-6 top-6 z-20 flex justify-end min-[1150px]:right-8 min-[1150px]:top-8">
           <MobileMenu host={host} />
         </div>
       )}
