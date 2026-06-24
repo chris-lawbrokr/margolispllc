@@ -172,15 +172,15 @@ function DesktopBar({ host }: { host: OverlayHost }) {
           href={c.href}
           target="_blank"
           rel="noopener noreferrer"
-          className={`flex h-24 flex-1 flex-col justify-center gap-1 overflow-hidden rounded-3xl px-5 text-left ${GLASS_BTN}`}
+          className={`flex h-24 flex-1 flex-col justify-center gap-0.5 overflow-hidden rounded-3xl px-5 text-left ${GLASS_BTN}`}
         >
-          <span className="truncate text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-white/60">
+          <span className="truncate text-[0.625rem] font-semibold uppercase tracking-[0.08em] text-white/60">
             {c.label}
           </span>
-          <span className="truncate text-lg font-medium leading-tight text-white">
+          <span className="truncate text-[0.9375rem] font-semibold leading-tight text-white">
             {c.title}
           </span>
-          <span className="line-clamp-2 text-[0.8125rem] font-normal text-white/70">
+          <span className="line-clamp-2 text-[0.6875rem] font-normal leading-snug text-white/70">
             {c.sub}
           </span>
         </a>
