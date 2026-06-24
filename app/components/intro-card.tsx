@@ -246,7 +246,7 @@ function CardBackground({ host }: { host: OverlayHost }) {
         {/* Bright, lightly-blurred overlay so the glass + text stay readable. */}
         <div
           aria-hidden
-          className="absolute inset-0 backdrop-blur-[3px]"
+          className="absolute inset-0 backdrop-blur-[6px]"
           style={{
             background:
               "linear-gradient(180deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.46) 100%)",
