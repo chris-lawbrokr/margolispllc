@@ -39,6 +39,8 @@ export const darkTheme: OverlayTheme = {
   logoSrc: "/images/margolis-logo.svg",
   vars: {
     "--ov-text": "#ffffff",
+    "--ov-headline": "#ffffff",
+    "--ov-subhead": "rgb(255 255 255 / 0.8)",
     "--ov-ink": "255 255 255",
     "--ov-accent": "#dbf0dd",
     "--ov-accent-hover": "#c7e6cb",
@@ -63,6 +65,8 @@ export const lightTheme: OverlayTheme = {
   logoSrc: "/images/margolis-logo-dark.svg",
   vars: {
     "--ov-text": "#103a33",
+    "--ov-headline": "#235547",
+    "--ov-subhead": "rgb(16 58 51 / 0.95)",
     "--ov-ink": "16 58 51",
     "--ov-accent": "#2e7060",
     "--ov-accent-hover": "#357d6c",

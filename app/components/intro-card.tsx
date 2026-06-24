@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight, ArrowUpRight, Menu, Newspaper, X } from "lucide-react";
-import { TAB_ORDER, type TabId } from "../lib/brand";
+import { TAB_ORDER } from "../lib/brand";
 import { ACCENT, CARD_BG, GLASS, GLASS_BTN, type OverlayHost } from "../lib/overlay-ui";
 import { ChipPopup, NavModal } from "./overlay-popups";
 
@@ -16,7 +16,7 @@ function Hero({ host, compact }: { host: OverlayHost; compact: boolean }) {
       key={host.tab}
       className="animate-hero-fade relative z-10 flex w-full max-w-3xl flex-col items-center gap-4 px-8 text-[var(--ov-text)]"
     >
-      <h2 className="m-0 text-center text-balance font-sans text-[clamp(1.75rem,4.8vw,4.25rem)] font-bold leading-[1.08] tracking-[-0.02em] text-[var(--ov-text)] min-[1150px]:whitespace-nowrap min-[1150px]:text-[clamp(1.75rem,3.1vw,3rem)]">
+      <h2 className="m-0 text-center text-balance font-sans text-[clamp(1.75rem,4.8vw,4.25rem)] font-bold leading-[1.08] tracking-[-0.02em] text-[var(--ov-headline)] min-[1150px]:whitespace-nowrap min-[1150px]:text-[clamp(1.75rem,3.1vw,3rem)]">
         {t.headline.map((p, i) => (
           <span key={i}>{p.t}</span>
         ))}
@@ -25,7 +25,7 @@ function Hero({ host, compact }: { host: OverlayHost; compact: boolean }) {
       {!compact && (
         <>
           {t.subhead ? (
-            <p className="m-0 max-w-[34rem] text-center text-base font-normal leading-normal text-[rgb(var(--ov-ink)/0.8)]">
+            <p className="m-0 max-w-[34rem] text-center text-base font-normal leading-normal text-[var(--ov-subhead)]">
               {t.subhead}
             </p>
           ) : (
@@ -243,10 +243,10 @@ function CardBackground({ host }: { host: OverlayHost }) {
           aria-hidden
           className="absolute inset-0 h-full w-full object-cover"
         />
-        {/* Bright, blurry overlay so the glass + text stay readable. */}
+        {/* Bright, lightly-blurred overlay so the glass + text stay readable. */}
         <div
           aria-hidden
-          className="absolute inset-0 backdrop-blur-lg"
+          className="absolute inset-0 backdrop-blur-[3px]"
           style={{
             background:
               "linear-gradient(180deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.46) 100%)",
@@ -283,18 +283,21 @@ export default function IntroCard({
     <div className="relative mx-auto flex aspect-[1080/1920] w-full max-w-[min(100%,calc((100vh_-_10rem_-_8px)*9/16))] items-center justify-center overflow-hidden rounded-[2rem] shadow-[0_20px_50px_-24px_rgba(17,17,26,0.45)] min-[1150px]:aspect-[1920/1080] min-[1150px]:max-w-[min(100%,calc((100vh_-_10rem_-_8px)*16/9))]">
       <CardBackground host={host} />
 
-      {/* Wordmark, top-left. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={host.theme.logoSrc}
-        alt={host.brand.name}
-        className="absolute left-6 top-6 z-10 w-32 min-[1150px]:left-8 min-[1150px]:top-8 min-[1150px]:w-40"
-      />
+      {/* Wordmark, top-left — vertically centered in the header band. */}
+      <div className="absolute left-6 top-6 z-10 flex h-12 items-center min-[1150px]:left-8 min-[1150px]:top-8">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={host.theme.logoSrc}
+          alt={host.brand.name}
+          className="w-32 min-[1150px]:w-40"
+        />
+      </div>
 
       {/* Top-center tabs (desktop, tall enough). */}
       {showTabs && (
+        <div className="absolute left-1/2 top-8 z-20 flex h-12 -translate-x-1/2 items-center">
         <div
-          className={`absolute left-1/2 top-8 z-20 flex -translate-x-1/2 items-center gap-1 rounded-full p-1 ${GLASS}`}
+          className={`flex items-center gap-1 rounded-full p-1 ${GLASS}`}
           role="tablist"
         >
           {TAB_ORDER.map((id) => {
@@ -317,11 +320,12 @@ export default function IntroCard({
             );
           })}
         </div>
+        </div>
       )}
 
       {/* Top-right header CTA (desktop) or the mobile menu. */}
       {showTabs ? (
-        <div className="absolute right-8 top-8 z-10 flex items-center gap-3">
+        <div className="absolute right-8 top-8 z-10 flex h-12 items-center">
           <a
             href={host.brand.ctaPrimary.href}
             target="_blank"
@@ -334,7 +338,7 @@ export default function IntroCard({
       ) : null}
 
       {showMobileMenu && (
-        <div className="absolute right-6 top-6 z-20 flex justify-end min-[1150px]:right-8 min-[1150px]:top-8">
+        <div className="absolute right-6 top-6 z-20 flex h-12 items-center justify-end min-[1150px]:right-8 min-[1150px]:top-8">
           <MobileMenu host={host} />
         </div>
       )}
