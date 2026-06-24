@@ -263,7 +263,7 @@ export default function Overlay({ theme = darkTheme }: { theme?: OverlayTheme })
                 <IntroCard host={host} layout={{ desktop, compact }} />
               </div>
               {/* "Powered by" badge, just below the card's bottom-right corner. */}
-              <div className="flex shrink-0 justify-end pt-3">
+              <div className="flex shrink-0 justify-end pt-6">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/images/poweredby.svg" alt="Powered by Boxii" className="h-5 w-auto" />
               </div>
