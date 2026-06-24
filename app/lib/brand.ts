@@ -152,6 +152,7 @@ export const margolis: Brand = {
       subhead:
         "Business-minded advice, senior attention, and pricing that fits how you grow.",
       cta: "I'm looking for something else",
+      ctaHref: `${SITE}/`,
       chips: [
         {
           id: "business",

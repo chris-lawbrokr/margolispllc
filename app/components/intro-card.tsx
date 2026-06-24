@@ -45,16 +45,7 @@ function Hero({ host, compact }: { host: OverlayHost; compact: boolean }) {
             ))}
           </div>
 
-          {host.tab === "customer" ? (
-            <button
-              type="button"
-              onClick={host.openNav}
-              className="group inline-flex items-center gap-1.5 text-[0.9375rem] font-normal text-[rgb(var(--ov-ink)/0.6)] transition-colors hover:text-[var(--ov-text)]"
-            >
-              {t.cta}
-              <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-            </button>
-          ) : (
+          {t.ctaHref ? (
             <a
               href={t.ctaHref}
               target="_blank"
@@ -64,6 +55,15 @@ function Hero({ host, compact }: { host: OverlayHost; compact: boolean }) {
               {t.cta}
               <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
             </a>
+          ) : (
+            <button
+              type="button"
+              onClick={host.openNav}
+              className="group inline-flex items-center gap-1.5 text-[0.9375rem] font-normal text-[rgb(var(--ov-ink)/0.6)] transition-colors hover:text-[var(--ov-text)]"
+            >
+              {t.cta}
+              <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+            </button>
           )}
         </>
       )}
