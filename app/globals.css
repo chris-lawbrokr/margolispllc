@@ -1,26 +1,152 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Arial for all body text by default. */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Tailwind v4 no longer defaults buttons to a pointer cursor — restore it. */
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
+/* Horizontal "trusted by" logo marquee. The track holds two copies of the
+   logos, so translating by -50% loops seamlessly. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* ---- Intro overlay animations (ported from the boxii overlay) ---- */
+
+/* Hero crossfade when switching tabs. */
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-hero-fade {
+  animation: hero-fade 0.28s ease both;
+}
+
+/* Shared popup backdrop fade. */
+@keyframes ov-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ov-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.animate-ov-in {
+  animation: ov-fade-in 200ms ease both;
+}
+.animate-ov-out {
+  animation: ov-fade-out 200ms ease both;
+}
+
+/* Popup panel scale-in / scale-out (chip answer + nav modal). */
+@keyframes pop-panel-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes pop-panel-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+.animate-panel-in {
+  animation: pop-panel-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.animate-panel-out {
+  animation: pop-panel-out 200ms ease both;
+}
+
+/* Mobile menu dropdown in / out. */
+@keyframes cta-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes cta-pop-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+}
+.animate-cta-in {
+  animation: cta-pop-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: top center;
+}
+.animate-cta-out {
+  animation: cta-pop-out 200ms ease both;
+  transform-origin: top center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-fade,
+  .animate-ov-in,
+  .animate-ov-out,
+  .animate-panel-in,
+  .animate-panel-out,
+  .animate-cta-in,
+  .animate-cta-out {
+    animation: none;
+  }
 }
