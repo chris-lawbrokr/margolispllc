@@ -57,16 +57,15 @@ export type Brand = {
 export const TAB_ORDER: TabId[] = ["new", "comparing", "customer"];
 
 const SITE = "https://www.margolispllc.com";
-const GET_STARTED = `${SITE}/lets-get-started`;
 const CONTACT = `${SITE}/contact-us`;
-// Lawbrokr intake link used by the popup CTAs ("Let's Get Started" / "Get in touch").
+// Lawbrokr intake link — ALL "Let's Get Started" / "Get in touch" CTAs point here.
 export const INTAKE = "https://margolispllc.lawbrokr.com/";
 
 export const margolis: Brand = {
   name: "Margolis PLLC",
   logoSrc: "/images/margolis-logo.svg",
 
-  ctaPrimary: { label: "Let's Get Started", href: GET_STARTED },
+  ctaPrimary: { label: "Let's Get Started", href: INTAKE },
   ctaSecondary: { label: "Contact", href: CONTACT },
 
   tabs: {
@@ -79,7 +78,7 @@ export const margolis: Brand = {
       subhead:
         "Tailored legal solutions for entrepreneurs, companies, and legal departments.",
       cta: "Let's get started",
-      ctaHref: GET_STARTED,
+      ctaHref: INTAKE,
       chips: [
         {
           id: "do",
